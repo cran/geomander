@@ -1,3 +1,39 @@
+# geomander 2.0.2
+* Drop `spdep` dependency to avoid timeouts on checking examples.
+
+# geomander 2.0.0
+* `check_contiguity()` orders by most frequent component, so less common components have higher numbers.
+* Uses `geos` for geographic computations over `sf` to avoid `s2` where possible and introduce speed improvements.
+* Uses `cli` package for progress reporting.
+* `adjacency` renamed to `adj` to match `redist` naming.
+* Updates `r2dra` and `dra2r` to work off of 2020 geometries.
+* Majority of functions gain `epsg` argument to project for accuracy relative to projection.
+
+# geomander 1.1.2
+* Fixes website redirects for CRAN.
+* Improves flexibility in `block2prec`.
+* Updates default year to 2020 for `create_block_table()`.
+* Adds a polygon contiguity check. Slower than the standard contiguity check, but covers more edge cases.
+
+# geomander 1.1.1
+* Replace `PL94171` import with `tigris`.
+
+# geomander 1.1.0
+* Collapse county calls into one for `create_block_table()`
+* Update variables to allow 2000 support in `create_block_table()`
+* Add VEST import tools
+* Fix edge case where no geo_match for final entries in `estimate_down()`
+* Add ALARM import tools
+
+# geomander 1.0.9
+* Address SD and AK create_block_table assumptions
+
+# geomander 1.0.8
+* downgrade CRS for solaris 2005 build
+
+# geomander 1.0.7 
+* Shortens vignettes for CRAN build speed
+
 # geomander 1.0.6
 * updates for sf 1.0-0 compatibility
 * makes sure all examples run

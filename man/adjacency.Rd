@@ -4,25 +4,23 @@
 \alias{adjacency}
 \title{Build Adjacency List}
 \usage{
-adjacency(shp, zero = TRUE, rook = TRUE)
+adjacency(shp, epsg = 3857)
 }
 \arguments{
 \item{shp}{sf dataframe}
 
-\item{zero}{Default is TRUE for zero indexed. FALSE gives a one indexed adjacency list.}
-
-\item{rook}{Default is TRUE for rook adjacency. FALSE gives queen adjacency}
+\item{epsg}{numeric EPSG code to planarize to. Default is 3857.}
 }
 \value{
 list with nrow(shp) entries
 }
 \description{
-This is similar to the old version of redist's adjacency function which has been
-replaced by sf internals. This is faster but less reliable. This wraps spdep::poly2nb()
-and replaces the indicator for no adjacent precincts with a integer(0)
+This mimics redist's redist.adjacency using GEOS to create the patterns, rather than sf.
+This is faster than that version, but forces projections.
 }
 \examples{
 data(precincts)
 adj <- adjacency(precincts)
+
 }
 \concept{fix}

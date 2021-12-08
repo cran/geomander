@@ -13,7 +13,7 @@ data(va18sub)
 unique(va18sub$COUNTYFP)
 
 ## ---- message = FALSE, results = 'hide', eval=FALSE---------------------------
-#  block <- create_block_table(state = 'VA', county = '087')
+#  block <- create_block_table(state = 'VA', county = '087', year = 2010)
 
 ## -----------------------------------------------------------------------------
 data("va_blocks")

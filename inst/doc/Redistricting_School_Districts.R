@@ -78,7 +78,7 @@ block <- block %>% mutate(TownID = matched) %>%
 ## ---- message = FALSE---------------------------------------------------------
 adj <- redist.adjacency(shp = block)
 
-comp <- check_contiguity(adjacency = adj, group = block$TownID)
+comp <- check_contiguity(adj = adj, group = block$TownID)
 
 which(comp$component > 1)
 
@@ -88,7 +88,7 @@ block$TownID[586] <- 2
 block$TownID[591] <- 4
 
 ## -----------------------------------------------------------------------------
-comp <- check_contiguity(adjacency = adj, group = block$TownID)
+comp <- check_contiguity(adj = adj, group = block$TownID)
 
 which(comp$component > 1)
 
