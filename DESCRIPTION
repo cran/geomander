@@ -1,8 +1,8 @@
 Package: geomander
 Type: Package
 Title: Geographic Tools for Studying Gerrymandering
-Version: 2.0.2
-Date: 2021-12-08
+Version: 2.0.3
+Date: 2022-03-06
 Authors@R: person("Christopher T.", "Kenny", email = "christopherkenny@fas.harvard.edu",
                   role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9386-6860"))
 Description: A compilation of tools to complete common tasks for studying gerrymandering. This focuses on the geographic tool side of common problems, such as linking different levels of spatial units or estimating how to break up units. Functions exist for creating redistricting-focused data for the US.
@@ -21,9 +21,9 @@ Encoding: UTF-8
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: yes
-Packaged: 2021-12-08 21:00:46 UTC; chris
+Packaged: 2022-03-07 00:49:36 UTC; chris
 Author: Christopher T. Kenny [aut, cre]
     (<https://orcid.org/0000-0002-9386-6860>)
 Maintainer: Christopher T. Kenny <christopherkenny@fas.harvard.edu>
 Repository: CRAN
-Date/Publication: 2021-12-08 21:30:06 UTC
+Date/Publication: 2022-03-07 01:10:02 UTC

@@ -1,9 +1,9 @@
-fe69b34127a6ed93c13be2b3060f852a *DESCRIPTION
+9d507501dcdbcd505874282b49e69e38 *DESCRIPTION
 602ccbe655a661d495fec6c314479325 *LICENCE
 74f82de082f4fbc0f422f3ebcea8d0ca *NAMESPACE
 502f28b3c60ab1b0f5b508f007b676ab *NEWS.md
 157a410763b453a6f2daa3f11c5af16f *R/RcppExports.R
-b199c559da7649e2ddf234797535ffd0 *R/adjacency.R
+ba1444725981f834d0203e6ba0bb9119 *R/adjacency.R
 6a6ceba117acb1e7d09768f8d3e619e5 *R/alarm.R
 4495b3ef301ed3a630963b45682cd047 *R/center.R
 df7269c31954413bd1f369c661e720af *R/contiguity.R
@@ -28,8 +28,8 @@ f47c58b80e41e87bd874dc2d08300767 *R/estimate.R
 cf794928715019cf81bd51d467156178 *R/utils-pipe.R
 03ef3e8737f0d80ea4c5048d7eb10b51 *R/vest.R
 19402aa3e30c1fb89b899a7a2e720bd4 *README.md
-0f3cbc35b052cbfec9d3d8b8fe21f5a7 *build/partial.rdb
-af8d8a6143889211b6a6543a4e588a27 *build/vignette.rds
+505f012934cd2cc92f68a1642410cc6a *build/partial.rdb
+f195b4172fd99c1cbb4c688a17c4a174 *build/vignette.rds
 1aa6495bcced7a72e17d17911551898a *data/checkerboard.rda
 8e9357707f565eed8ff10068f14a835a *data/checkerboard_adj.rda
 8b040e52e9c4819d12bcafa4be84b153 *data/nrcsd.rda
@@ -46,11 +46,11 @@ c12448e7de9a1d73a0e5e8830b9aff35 *inst/doc/Merging_Election_Data.Rmd
 dd34710bbd151cb3b5ab9d8f0c914574 *inst/doc/Merging_Election_Data.html
 4bbbe1c0fae8306881977f9de06f89bc *inst/doc/Redistricting_School_Districts.R
 5c2398c91066775c53a6d8b489b13297 *inst/doc/Redistricting_School_Districts.Rmd
-f7f5055cc4fee676b87ab2e0c6302549 *inst/doc/Redistricting_School_Districts.html
+077a2563b0c1f3a39ee0e81882a0274b *inst/doc/Redistricting_School_Districts.html
 451d15570a2ccd4ba920701cc1327ba6 *man/add_edge.Rd
 c21683b9b4838ff652391b4f10ec0b6a *man/adjacency.Rd
 93d768f696c13d28d7eeb72a67ca9fbf *man/alarm_states.Rd
-38d79347413d055557b552781c942fc5 *man/block2prec.Rd
+b75aecb279cf0b2b9a32b2e8b376a51e *man/block2prec.Rd
 a2db2285c2ef7243d674cd8ea60e68e6 *man/block2prec_by_county.Rd
 3698dcb03c42fec25f2e9ce609b5fbc5 *man/check_contiguity.Rd
 eae8ca687bb09b5dcd40bb2f6ec8a0f4 *man/check_polygon_contiguity.Rd
@@ -58,7 +58,7 @@ ff7df46348779b8eaaf5a6f3a1cc8dfb *man/checkerboard.Rd
 7c28b05bdd069e82bca648e8edce316c *man/checkerboard_adj.Rd
 414798b03f125f122784a8f09298244f *man/clean_vest.Rd
 e5616d7b638233bc6658145e0e5606c5 *man/compare_adjacencies.Rd
-91f702ae3bec4ad45cf4488d0c5560df *man/count_connections.Rd
+46ec9b9fb5c8f85f8a787fe1dd27c6b0 *man/count_connections.Rd
 dd2d46f213d044747e3ae9e51ac2b03b *man/create_block_table.Rd
 f3dd616dfbe2a7204ad2a9751a787c5a *man/create_tract_table.Rd
 8df11d61e0bd036f9decc64611a51124 *man/dra2r.Rd
@@ -69,7 +69,7 @@ a19170bad24910ce550b7e8fb2631107 *man/figures/logo.png
 b4aca77af635502dd25942fc83515277 *man/geo_estimate_up.Rd
 a571bc23cc379ead9a3cf8f09532bc13 *man/geo_filter.Rd
 f2ee382ecdc67ed9a0556893f2a10cd4 *man/geo_match.Rd
-bf7ea668dc9b2d54beb55d697431c4e9 *man/geo_plot.Rd
+21917cf85f30a92e9269d61704960a07 *man/geo_plot.Rd
 8d05fc53ee01cc87a403f2bb1a9b6f7a *man/geo_plot_group.Rd
 49945e92b23a5fa5aa234315487f017e *man/geo_sort.Rd
 17c35d32625f980903a8f9bd1b5c4b91 *man/geo_trim.Rd
@@ -82,9 +82,9 @@ c2364744c46c1ec7f90f409361acd241 *man/geos_centerish.Rd
 126dbd5d711f3cbd502766f469cbb607 *man/gstar_i.Rd
 f326f9db3076ca73784c653ff70980ee *man/local_gearys.Rd
 62ed1ad728c0648af3b5f35ee0eb7e78 *man/local_morans.Rd
-8750d7355514cdc3263602f294f9ca3d *man/nrcsd.Rd
+68b14c67bdd4b9671bfb027d0033e523 *man/nrcsd.Rd
 5d3fd549f9219307e7998b7abb6dd4bc *man/orange.Rd
-774d9de8e95aa151215efcd304549d41 *man/pipe.Rd
+681b2124446446b6b045b496fe131ecf *man/pipe.Rd
 8d86527e22df1cd954fa61bedb8300dd *man/precincts.Rd
 3b91ff5ba89a472e98015616b9cb5567 *man/r2dra.Rd
 c7c7713338e97724d4043e870ed03b98 *man/rockland.Rd
@@ -105,7 +105,7 @@ ad42f67e40e4262a8d2633f7c32f1a3b *man/va_blocks.Rd
 9e390ee46e2954bb0ea02db1be0b9b1f *man/vest_doi.Rd
 2650a4852b56c88288c788bbdaf18c92 *man/vest_party.Rd
 a4cc710fdc29d84c701f5809673de44f *man/vest_states.Rd
-d311a86cb36c15722575e4bf1ea24a84 *src/RcppExports.cpp
+76e54cf7f74ec9c200cf714e03fd688a *src/RcppExports.cpp
 d2da272b300d01d7d114b7c364a25599 *src/adjlist2matrix.cpp
 ea9234ef2e8fae457c79094c018603f7 *src/code.c
 8c3e4347580198b86d5714011bd1ec9b *src/contiguity.cpp
@@ -123,6 +123,6 @@ d75f5a89bf39e5185dc891f448eaafa2 *tests/testthat/test-estimate.R
 2376eb316a7049b7f5ee24a15d9e5a5a *tests/testthat/test-planar.R
 b323f61b1e2bfc7723523f4722a8eb52 *tests/testthat/test-seam.R
 ac4decd7387aaf85c1baa90fc0689fdb *tests/testthat/test-sort.R
-92a3de139fd28c28fe472819b660e11d *tests/testthat/test-split.R
+7dc0ddee62ef47806854b0ee53dba6ec *tests/testthat/test-split.R
 c12448e7de9a1d73a0e5e8830b9aff35 *vignettes/Merging_Election_Data.Rmd
 5c2398c91066775c53a6d8b489b13297 *vignettes/Redistricting_School_Districts.Rmd

@@ -236,8 +236,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 An earlier bug incorrectly in redist doubled the number of removed edges.
 ## Current counts are correct.
-## This message is displayed once per session.
-## 
  </code></pre>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>comp_m <span class="ot">&lt;-</span> comp <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(draw) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(EdgesRemoved))</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -256,13 +254,13 @@ An earlier bug incorrectly in redist doubled the number of removed edges.
 ## # A tibble: 7 x 11
 ##   district   vap vap_white vap_black vap_hisp vap_aian vap_asian vap_nhpi
 ##      &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1        1  4909       746       370     3657       11        73        0
-## 2        2  5134      2180       837     1811        5       230        2
-## 3        3  5331      1973       667     2394        7       210        1
-## 4        4  5254      3449       571      946        7       233        0
-## 5        5  5404      3883       242     1069        3       152        0
-## 6        6  5239      4362       146      590        4        88        1
-## 7        7  5189      3837       433      565        9       284        1
+## 1        1  4983      1678       928     2036        6       250        0
+## 2        2  5307      4438       129      597        4        90        2
+## 3        3  5300      3349       660      964        6       258        0
+## 4        4  5308      4302       209      556        9       178        0
+## 5        5  5306      3691       385      952        3       225        0
+## 6        6  4945       993       439     3341       10       111        0
+## 7        7  5311      1979       516     2586        8       158        3
 ## # ... with 3 more variables: vap_other &lt;dbl&gt;, vap_two &lt;dbl&gt;,
 ## #   geometry &lt;POLYGON [m]&gt;</code></pre>
 
