@@ -14,6 +14,8 @@ NULL
 #' @importFrom tidyr pivot_wider
 #' @importFrom stringr str_detect
 #' @importFrom readr read_csv write_csv
+#' @importFrom rlang .env .data :=
+#' @importFrom Rcpp evalCpp
 NULL
 
 globalVariables(c('.'))
