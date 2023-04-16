@@ -8,9 +8,8 @@ library(ggplot2)
 library(dplyr)
 library(stringr)
 
-library(redist)
 library(sf)
-library(tigris)
+library(tinytiger)
 
 ## ---- results = 'hide', eval = FALSE, message = FALSE-------------------------
 #  blockRockland <- create_block_table(state = 'NY', county = 'Rockland')
@@ -24,7 +23,7 @@ data("rockland")
 block <- bind_rows(rockland, orange)
 
 ## ---- results = 'hide', eval = FALSE, message = FALSE-------------------------
-#  school <- school_districts(state = 'NY') %>% filter(str_detect(NAME, 'North Rockland'))
+#  school <- tt_unified_school_districts(state = 'NY') %>% filter(str_detect(NAME, 'North Rockland'))
 
 ## -----------------------------------------------------------------------------
 data("nrcsd")
@@ -76,7 +75,7 @@ block <- block %>% mutate(TownID = matched) %>%
   mutate(TownID = ifelse(county != '087', 8, TownID)) 
 
 ## ---- message = FALSE---------------------------------------------------------
-adj <- redist.adjacency(shp = block)
+adj <- adjacency(shp = block)
 
 comp <- check_contiguity(adj = adj, group = block$TownID)
 
@@ -92,7 +91,8 @@ comp <- check_contiguity(adj = adj, group = block$TownID)
 
 which(comp$component > 1)
 
-## -----------------------------------------------------------------------------
+## ---- eval = 'redist' %in% installed.packages()-------------------------------
+library(redist)
 map <- redist_map(block, pop_tol = 0.02, ndists = 7, adj = adj)
 
 sims005 <- redist_smc(map, nsims = 50, counties = TownID, silent = TRUE)
@@ -107,7 +107,7 @@ comp_m <- comp %>% group_by(draw) %>% summarize(mean = mean(EdgesRemoved))
 
 pick <- tibble(parity = par) %>% bind_cols(comp_m) %>% slice_max(order_by = mean, n = 1) %>% pull(draw)
 
-## -----------------------------------------------------------------------------
+## ----  eval = 'redist' %in% installed.packages()------------------------------
 block %>% 
   mutate(district = plans[,pick]) %>% 
   group_by(district) %>% 

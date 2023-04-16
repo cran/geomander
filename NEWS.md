@@ -1,3 +1,14 @@
+# geomander 2.2.0
+* Updates dependencies for easier installation.
+* Allows for use of `circle` as a method in `geo_match()`.
+* Adds a `by` argument to `geo_match()` for subsetting to known matching regions.
+* Uses `redist` in vignettes only conditionally.
+* Massive improvements in performance for `check_contiguity()`.
+
+# geomander 2.1.1
+* Fixes missing tolerance bug in `geos_circle_center()`.
+* Adds experimental regionalizion approach, `regionalize()`.
+
 # geomander 2.1.0
 * Avoid indirect download for `get_alarm()`. Fixes bug where block level data resulted in mismatched geometry.
 * Add `st_circle_center()` and `geos_circle_center()` for centroid of the maximum inscribed circle.

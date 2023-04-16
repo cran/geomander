@@ -9,16 +9,16 @@ baf_to_vtd(baf, plan_name, GEOID = "GEOID")
 \arguments{
 \item{baf}{a tibble representing a block assignment file.}
 
-\item{plan_name}{character. Name of column in `baf` which corresponds to the districts.}
+\item{plan_name}{character. Name of column in \code{baf} which corresponds to the districts.}
 
-\item{GEOID}{character. Name of column which corresponds to each block's GEOID, 
-sometimes called "BLOCKID". Default is `'GEOID'`.}
+\item{GEOID}{character. Name of column which corresponds to each block's GEOID,
+sometimes called "BLOCKID". Default is \code{'GEOID'}.}
 }
 \value{
 a tibble with a vtd-level assignment file
 }
 \description{
-District lines are often provided at the census block level, but analyses 
+District lines are often provided at the census block level, but analyses
 often occur at the voting district level. This provides a simple way to
 estimate the block level to the voting district level.
 }
@@ -29,13 +29,15 @@ common district.
 \examples{
 # Not guaranteed to reach download from redistrict2020.org
 \dontrun{
-# download and read baf ---- 
+# download and read baf ----
 url <- 'https://www.redistrict2020.org/files/DE-2021-01/DE_SLDU_bef.zip'
 tf <- tempfile('.zip')
 utils::download.file(url, tf)
 utils::unzip(tf, exdir = dirname(tf))
-baf <- readr::read_csv(file = paste0(dirname(tf), '/DE_SLDU_bef.csv'), 
-                       col_types = 'ci')
+baf <- readr::read_csv(
+  file = paste0(dirname(tf), '/DE_SLDU_bef.csv'),
+  col_types = 'ci'
+)
 names(baf) <- c('GEOID', 'ssd_20')
 
 # convert to vtd level ----

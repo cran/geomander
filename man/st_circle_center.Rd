@@ -9,7 +9,7 @@ st_circle_center(shp, tolerance = 0.01, epsg = 3857)
 \arguments{
 \item{shp}{An sf dataframe}
 
-\item{tolerance}{postive numeric tolerance to simplify by. Default is 0.01.}
+\item{tolerance}{positive numeric tolerance to simplify by. Default is 0.01.}
 
 \item{epsg}{numeric EPSG code to planarize to. Default is 3857.}
 }
@@ -21,7 +21,7 @@ Returns the centroid of the largest inscribed circle for each shape
 }
 \examples{
 data(towns)
-st_centerish(towns)
+st_circle_center(towns)
 
 }
 \concept{center}

@@ -5,7 +5,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(geomander)
 library(dplyr)
 library(ggplot2)
-library(tigris)
+library(tinytiger)
 library(sf)
 
 ## -----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ data(va18sub)
 #  block <- create_block_table(state = 'VA', county = '087')
 
 ## ---- results='hide', eval = FALSE, message = FALSE---------------------------
-#  vtd <- voting_districts(state = 'VA') %>% filter(COUNTYFP10 == '087')
+#  vtd <- tt_voting_districts(state = 'VA', county = '087', year = 2010)
 
 ## -----------------------------------------------------------------------------
 data("va_vtd")
