@@ -4,7 +4,7 @@
 \alias{baf_to_vtd}
 \title{Estimate Plans from a Block Assignment File to Voting Districts}
 \usage{
-baf_to_vtd(baf, plan_name, GEOID = "GEOID")
+baf_to_vtd(baf, plan_name, GEOID = "GEOID", year = 2020)
 }
 \arguments{
 \item{baf}{a tibble representing a block assignment file.}
@@ -13,6 +13,8 @@ baf_to_vtd(baf, plan_name, GEOID = "GEOID")
 
 \item{GEOID}{character. Name of column which corresponds to each block's GEOID,
 sometimes called "BLOCKID". Default is \code{'GEOID'}.}
+
+\item{year}{the decade to request, either \code{2010} or \code{2020}. Default is \code{2020}.}
 }
 \value{
 a tibble with a vtd-level assignment file

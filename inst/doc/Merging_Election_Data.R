@@ -12,7 +12,7 @@ library(sf)
 data(va18sub)
 unique(va18sub$COUNTYFP)
 
-## ---- message = FALSE, results = 'hide', eval=FALSE---------------------------
+## ----message = FALSE, results = 'hide', eval=FALSE----------------------------
 #  block <- create_block_table(state = 'VA', county = '087', year = 2010)
 
 ## -----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ matches <- geo_match(from = block, to = va18sub, method = 'centroid')
 ## -----------------------------------------------------------------------------
 prec <- block2prec(block_table = block, matches = matches)
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  prec_by_c <- block2prec_by_county(block_table = block, precinct = va18sub, precinct_county_fips = 'COUNTYFP')
 
 ## -----------------------------------------------------------------------------
@@ -34,10 +34,10 @@ fulldata <- bind_cols(va18sub, prec)
 ## -----------------------------------------------------------------------------
 data(va18sub)
 
-## ---- message = FALSE, eval = FALSE-------------------------------------------
+## ----message = FALSE, eval = FALSE--------------------------------------------
 #  block <- create_block_table(state = 'VA', county = '087')
 
-## ---- results='hide', eval = FALSE, message = FALSE---------------------------
+## ----results='hide', eval = FALSE, message = FALSE----------------------------
 #  vtd <- tt_voting_districts(state = 'VA', county = '087', year = 2010)
 
 ## -----------------------------------------------------------------------------

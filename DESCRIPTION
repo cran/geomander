@@ -1,10 +1,14 @@
 Package: geomander
 Type: Package
 Title: Geographic Tools for Studying Gerrymandering
-Version: 2.2.1
-Date: 2023-04-16
-Authors@R: person("Christopher T.", "Kenny", email = "christopherkenny@fas.harvard.edu",
-                  role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9386-6860"))
+Version: 2.3.0
+Date: 2024-02-15
+Authors@R: c(
+    person("Christopher T.", "Kenny", email = "christopherkenny@fas.harvard.edu",
+            role = c("aut", "cre"), comment = c(ORCID = "0000-0002-9386-6860")),
+    person("Cory", "McCartan", email = "corymccartan@nyu.edu",
+            role = "ctb", comment = c(ORCID = "0000-0002-6251-669X"))
+            )
 Description: A compilation of tools to complete common tasks for studying gerrymandering. 
     This focuses on the geographic tool side of common problems, such as linking 
     different levels of spatial units or estimating how to break up units. Functions 
@@ -18,15 +22,18 @@ LinkingTo: Rcpp (>= 1.0.7)
 Imports: censable, cli, dataverse, dplyr, geos, ggplot2, magrittr,
         readr, rlang, Rcpp, sf, stringr, tibble, tidyr, tinytiger
 Depends: R (>= 3.0.2)
-Suggests: redist, knitr, rmarkdown, testthat (>= 3.0.0)
+Suggests: redist, knitr, rmarkdown, testthat (>= 3.0.0), RcppSimdJson,
+        spelling
 LazyData: true
 Encoding: UTF-8
 VignetteBuilder: knitr
 Config/testthat/edition: 3
+Language: en-US
 NeedsCompilation: yes
-Packaged: 2023-04-16 14:17:04 UTC; chris
+Packaged: 2024-02-15 20:40:33 UTC; chris
 Author: Christopher T. Kenny [aut, cre]
-    (<https://orcid.org/0000-0002-9386-6860>)
+    (<https://orcid.org/0000-0002-9386-6860>),
+  Cory McCartan [ctb] (<https://orcid.org/0000-0002-6251-669X>)
 Maintainer: Christopher T. Kenny <christopherkenny@fas.harvard.edu>
 Repository: CRAN
-Date/Publication: 2023-04-16 14:40:06 UTC
+Date/Publication: 2024-02-15 21:20:02 UTC

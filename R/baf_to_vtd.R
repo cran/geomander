@@ -11,6 +11,7 @@
 #' @param plan_name character. Name of column in `baf` which corresponds to the districts.
 #' @param GEOID character. Name of column which corresponds to each block's GEOID,
 #' sometimes called "BLOCKID". Default is `'GEOID'`.
+#' @param year the decade to request, either `2010` or `2020`. Default is `2020`.
 #'
 #' @return a tibble with a vtd-level assignment file
 #' @export
@@ -33,7 +34,7 @@
 #' baf_to_vtd(baf = baf, plan_name = 'ssd_20', 'GEOID')
 #' }
 #'
-baf_to_vtd <- function(baf, plan_name, GEOID = 'GEOID') {
+baf_to_vtd <- function(baf, plan_name, GEOID = 'GEOID', year = 2020) {
   if (missing(baf)) {
     cli::cli_abort('{.arg baf} missing, but required.')
   }
@@ -50,10 +51,18 @@ baf_to_vtd <- function(baf, plan_name, GEOID = 'GEOID') {
   if (!'character' %in% class(GEOID)) {
     cli::cli_abort('{.arg GEOID} must be a {.cls character}.')
   }
+  
+  if (!year %in% c(2010, 2020)) {
+    cli::cli_abort('{.arg year} must be either 2010 or 2020.')
+  }
 
   state_fips <- substr(baf[[GEOID]][1], 1, 2)
 
-  baf_vtd <- download_2020_vtd_baf(state = state_fips)
+  if (year == 2020) {
+    baf_vtd <- download_2020_vtd_baf(state = state_fips)
+  } else {
+    baf_vtd <- download_2010_vtd_baf(state = state_fips)
+  }
 
   baf <- baf %>%
     dplyr::rename(GEOID = .env$GEOID) %>%
@@ -94,6 +103,39 @@ download_2020_vtd_baf <- function(state) {
   readr::read_delim(
     file = baf_vtd_path,
     delim = '|',
+    col_types = readr::cols(.default = 'c'),
+    progress = interactive()
+  ) %>%
+    dplyr::rename(GEOID = .data$BLOCKID, county = .data$COUNTYFP, vtd = .data$DISTRICT)
+}
+
+download_2010_vtd_baf <- function(state) {
+  fips <- censable::match_fips(state)
+  abb <- censable::match_abb(state)
+  
+  zip_path <- tempfile(fileext = '.zip')
+  zip_dir <- dirname(zip_path)
+  base_name <- stringr::str_glue('BlockAssign_ST{fips}_{abb}')
+  zip_url <- stringr::str_glue('https://www2.census.gov/geo/docs/maps-data/data/baf/{base_name}.zip')
+  
+  tf <- tempfile(fileext = '.zip')
+  utils::download.file(zip_url, tf)
+  baf_vtd_path <- utils::unzip(
+    zipfile = tf,
+    files = paste0('BlockAssign_ST', fips, '_', abb, '_VTD.txt'),
+    exdir = dirname(tf)
+  ) %>%
+    suppressWarnings()
+
+  if (length(baf_vtd_path) == 0) {
+    cli::cli_abort(c('VTD file not found in zip file.',
+      'i' = paste0('Check downloaded files at ', tf, '.')
+    ))
+  }
+
+  readr::read_delim(
+    file = baf_vtd_path,
+    delim = ',',
     col_types = readr::cols(.default = 'c'),
     progress = interactive()
   ) %>%
