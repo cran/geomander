@@ -13,7 +13,7 @@ data(va18sub)
 unique(va18sub$COUNTYFP)
 
 ## ----message = FALSE, results = 'hide', eval=FALSE----------------------------
-#  block <- create_block_table(state = 'VA', county = '087', year = 2010)
+# block <- create_block_table(state = 'VA', county = '087', year = 2010)
 
 ## -----------------------------------------------------------------------------
 data("va_blocks")
@@ -26,7 +26,7 @@ matches <- geo_match(from = block, to = va18sub, method = 'centroid')
 prec <- block2prec(block_table = block, matches = matches)
 
 ## ----eval = FALSE-------------------------------------------------------------
-#  prec_by_c <- block2prec_by_county(block_table = block, precinct = va18sub, precinct_county_fips = 'COUNTYFP')
+# prec_by_c <- block2prec_by_county(block_table = block, precinct = va18sub, precinct_county_fips = 'COUNTYFP')
 
 ## -----------------------------------------------------------------------------
 fulldata <- bind_cols(va18sub, prec)
@@ -35,17 +35,17 @@ fulldata <- bind_cols(va18sub, prec)
 data(va18sub)
 
 ## ----message = FALSE, eval = FALSE--------------------------------------------
-#  block <- create_block_table(state = 'VA', county = '087')
+# block <- create_block_table(state = 'VA', county = '087')
 
 ## ----results='hide', eval = FALSE, message = FALSE----------------------------
-#  vtd <- tt_voting_districts(state = 'VA', county = '087', year = 2010)
+# vtd <- tt_voting_districts(state = 'VA', county = '087', year = 2010)
 
 ## -----------------------------------------------------------------------------
 data("va_vtd")
 vtd <- va_vtd
 
 ## -----------------------------------------------------------------------------
-vtd %>% ggplot() +
+vtd |> ggplot() +
   geom_sf() + 
   geom_sf(data = va18sub, color = 'red', fill = 'NA' )+
   theme_void()

@@ -30,8 +30,8 @@
 #' library(dplyr)
 #' data(checkerboard)
 #' counties <- sf::st_as_sf(as.data.frame(rbind(
-#'   sf::st_union(checkerboard %>% filter(i < 4)),
-#'   sf::st_union(checkerboard %>% filter(i >= 4))
+#'   sf::st_union(checkerboard |> filter(i < 4)),
+#'   sf::st_union(checkerboard |> filter(i >= 4))
 #' )))
 #'
 #' geo_match(from = checkerboard, to = counties)
@@ -45,17 +45,50 @@ geo_match <- function(from, to, method = 'center', by = NULL, tiebreaker = TRUE,
   if (missing(to)) {
     cli::cli_abort('Please provide an argument to {.arg to}.')
   }
-
-  pairs <- make_planar_pair(from, to, epsg = epsg)
+  
+  # setup by ----
+  if (!is.null(by)) {
+    
+    if (length(by) != 1) {
+      cli::cli_abort('{.arg by} must be {.val NULL} or length 1.')
+    }
+    
+    if (length(names(by)) > 0) {
+      col_from <- names(by)
+      col_to <- unname(by)
+    } else {
+      col_to <- col_from <- by
+    }
+    
+    if (!col_from %in% names(from)) {
+      cli::cli_abort('{.arg by} entry for from {col_from} not found in {.arg from}.')
+    }
+    if (!col_to %in% names(to)) {
+      cli::cli_abort('{.arg to} entry for from {col_to} not found in {.arg to}.')
+    }
+    
+    vals <- unique(from[[col_from]])
+    
+    col_from_data <- from[[col_from]]
+    col_to_data <- to[[col_to]]
+    
+    from_idx <- lapply(vals, function(v) which(col_from_data == v))
+    to_idx <- lapply(vals, function(v) which(col_to_data == v))
+    
+  }
+  
+  # start from / to optimizing ----
+  pairs <- make_planar_pair(sf::st_geometry(from), sf::st_geometry(to), epsg = epsg)
   from <- pairs$x
   to <- pairs$y
+  to_tree <- geos::geos_strtree(to)
 
   if (is.null(by)) {
     if (method %in% c('center', 'centroid', 'point', 'circle')) {
       if (method == 'center') {
-        op <- function(x) st_centerish(x, epsg = epsg)
+        op <- function(x) geos_centerish(x, epsg = epsg)
       } else if (method == 'circle') {
-        op <- function(x) st_circle_center(x, epsg = epsg)
+        op <- function(x) geos_circle_center(x, epsg = epsg)
       } else if (method == 'centroid') {
         op <- geos::geos_centroid
       } else {
@@ -64,15 +97,12 @@ geo_match <- function(from, to, method = 'center', by = NULL, tiebreaker = TRUE,
 
       pts <- op(from)
 
-      ints <- geos::geos_intersects_matrix(pts, to)
+      ints <- geos::geos_intersects_matrix(pts, to_tree)
       if (any(lengths(ints) != 1)) {
         idx <- which(lengths(ints) != 1)
 
         if (tiebreaker) {
-          for (i in seq_along(idx)) {
-            nnb <- nn_geos(x = from[idx[i], ], y = to)
-            ints[[idx[i]]] <- nnb
-          }
+          ints[idx] <- geos::geos_nearest_indexed(geom = from[idx, ], tree = to_tree)
         } else {
           for (i in seq_along(ints)) {
             if (length(ints[[i]]) == 0) {
@@ -85,8 +115,6 @@ geo_match <- function(from, to, method = 'center', by = NULL, tiebreaker = TRUE,
         }
       }
     } else {
-      to <- to %>% dplyr::mutate(toid = dplyr::row_number())
-      from <- from %>% dplyr::mutate(fromid = dplyr::row_number())
       ints <- largest_intersection_geos(
         x = geos::geos_make_valid(from),
         y = geos::geos_make_valid(to)
@@ -96,57 +124,28 @@ geo_match <- function(from, to, method = 'center', by = NULL, tiebreaker = TRUE,
         idx <- which(is.na(ints))
 
         if (tiebreaker) {
-          for (i in seq_along(idx)) {
-            nnb <- nn_geos(x = from[idx[i], ], y = to)
-            ints[idx[i]] <- nnb
-          }
+          ints[idx] <- geos::geos_nearest_indexed(geom = from[idx, ], tree = to_tree)
         } else {
-          for (i in seq_along(idx)) {
-            ints[idx[i]] <- -1L
-          }
+          ints[idx] <- -1L
         }
       }
     }
 
     ints[geos::geos_is_empty(from)] <- NA_real_
   } else {
-    # check by ----
-    if (length(by) != 1) {
-      cli::cli_abort('{.arg by} must be {.val NULL} or length 1.')
-    }
-
-    if (length(names(by)) > 0) {
-      col_from <- names(by)
-      col_to <- unname(by)
-    } else {
-      col_to <- col_from <- by
-    }
-
-    if (!col_from %in% names(from)) {
-      cli::cli_abort('{.arg by} entry for from {col_from} not found in {.arg from}.')
-    }
-    if (!col_to %in% names(to)) {
-      cli::cli_abort('{.arg to} entry for from {col_to} not found in {.arg to}.')
-    }
-
-    vals <- unique(from[[col_from]]) # vals_from
-    # vals_to <- unique(to[col_to])
-
     # create corresponding subset lists
-    from_l <- lapply(vals, function(v) {
-      from %>%
-        dplyr::filter(.data[[col_from]] == v)
+    from_l <- lapply(from_idx, function(v) {
+      from[v]
     })
-    to_l <- lapply(vals, function(v) {
-      to %>%
-        dplyr::filter(.data[[col_to]] == v)
+    to_l <- lapply(to_idx, function(v) {
+      to[v]
     })
 
     # id entries
     int_l <- lapply(
       seq_along(vals),
       function(i) {
-        if (nrow(from_l[[i]]) == 0 || nrow(to_l[[i]]) == 0) {
+        if (length(from_l[[i]]) == 0 || length(to_l[[i]]) == 0) {
           return(integer(0)) # perhaps cli::cli_abort('something about values being in both')
         }
         geo_match(
@@ -158,16 +157,21 @@ geo_match <- function(from, to, method = 'center', by = NULL, tiebreaker = TRUE,
     )
 
     # build index
-    ints <- rep.int(NA_integer_, times = nrow(from))
+    ints <- rep.int(NA_integer_, times = length(from))
 
     for (i in seq_along(vals)) {
-      from_idx <- which(from[[col_from]] == vals[i])
-      to_idx <- which(to[[col_to]] == vals[i])
+      from_idx <- which(col_from_data == vals[i])
+      to_idx <- which(col_to_data == vals[i])
       ints[from_idx] <- to_idx[int_l[[i]]]
     }
   }
 
-  as.integer(ints)
+  ints <- as.integer(ints)
+  if (is.na(max(ints))) {
+    cat(ints)
+  }
+  if (max(ints) != length(to)) {
+    attr(ints, 'matching_max') <- length(to)
+  }
+  ints
 }
-
-globalVariables(c('fromid', 'toid', 'area'))
